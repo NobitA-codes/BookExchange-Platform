@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExchangeReads - Discover, Exchange, and Read</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="#" class="logo">ExchangeReads</a>
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-link active" data-page="home">Home</a>
+                <a href="#" class="nav-link" data-page="my-books">My Books</a>
+                <a href="#" class="nav-link" data-page="about">About</a>
+            </nav>
+
+            <div class="user-menu">
+                <div id="auth-section">
+                    <button class="btn btn-secondary" id="login-btn">Login</button>
+                    <button id="signup-btn" class="btn btn-primary">Sign Up</button>
+                    <button class="btn btn-primary" id="add-book-btn">Add Book</button>
+                </div>
+
+                <div id="user-section" class="hidden">
+                    <span id="user-name" class="nav-link"></span>
+                    <button class="btn btn-danger" id="logout-btn">Logout</button>
+                </div>
+            </div>
+
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Share Books, Build Community</h1>
+            <p>Discover your next great read while giving your books a new home. Connect with fellow book lovers in your
+                area.</p>
+            <button class="btn btn-primary" id="hero-add-book">List Your First Book</button>
+        </section>
+
+        <!-- Search & Filters -->
+        <section class="search-section">
+            <div class="search-bar">
+                <input type="text" class="search-input" id="search-title" placeholder="Search by title...">
+                <input type="text" class="search-input" id="search-author" placeholder="Search by author...">
+                <button class="btn btn-primary" id="search-btn">Search</button>
+            </div>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <label class="filter-label">Genre</label>
+                    <select class="filter-select" id="filter-genre">
+                        <option value="">All Genres</option>
+                        <option value="fiction">Fiction</option>
+                        <option value="non-fiction">Non-Fiction</option>
+                        <option value="mystery">Mystery</option>
+                        <option value="romance">Romance</option>
+                        <option value="sci-fi">Sci-Fi</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="biography">Biography</option>
+                        <option value="history">History</option>
+                        <option value="self-help">Self-Help</option>
+                        <option value="business">Business</option>
+                        <option value="children">Children</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Condition</label>
+                    <select class="filter-select" id="filter-condition">
+                        <option value="">All Conditions</option>
+                        <option value="new">New</option>
+                        <option value="like-new">Like New</option>
+                        <option value="used">Used</option>
+                        <option value="worn">Worn</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Price</label>
+                    <select class="filter-select" id="filter-price">
+                        <option value="">All Prices</option>
+                        <option value="free">Free</option>
+                        <option value="paid">Paid</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Availability</label>
+                    <select class="filter-select" id="filter-availability">
+                        <option value="">All Books</option>
+                        <option value="available">Available</option>
+                        <option value="unavailable">Unavailable</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Books Grid -->
+        <section id="books-container">
+            <div class="books-grid" id="books-grid">
+                <!-- Books will be populated by JavaScript -->
+            </div>
+
+            <div class="empty-state hidden" id="empty-state">
+                <div class="empty-state-icon">📚</div>
+                <h3>No books found</h3>
+                <p>Try adjusting your search criteria or be the first to add a book!</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Add/Edit Book Modal -->
+    <div class="modal" id="book-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Add New Book</h2>
+                <button class="modal-close" id="modal-close">×</button>
+            </div>
+
+            <form id="book-form">
+                <div class="form-group">
+                    <label class="form-label" for="book-title">Title *</label>
+                    <input type="text" class="form-input" id="book-title" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="book-author">Author *</label>
+                    <input type="text" class="form-input" id="book-author" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="book-genre">Genre *</label>
+                    <select class="form-select" id="book-genre" required>
+                        <option value="">Select Genre</option>
+                        <option value="fiction">Fiction</option>
+                        <option value="non-fiction">Non-Fiction</option>
+                        <option value="mystery">Mystery</option>
+                        <option value="romance">Romance</option>
+                        <option value="sci-fi">Sci-Fi</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="biography">Biography</option>
+                        <option value="history">History</option>
+                        <option value="self-help">Self-Help</option>
+                        <option value="business">Business</option>
+                        <option value="children">Children</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="book-condition">Condition *</label>
+                    <select class="form-select" id="book-condition" required>
+                        <option value="">Select Condition</option>
+                        <option value="new">New</option>
+                        <option value="like-new">Like New</option>
+                        <option value="used">Used</option>
+                        <option value="worn">Worn</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="book-price">Price</label>
+                    <input type="text" class="form-input" id="book-price" placeholder="Enter price or 'Free'">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="book-contact">Contact Information *</label>
+                    <input type="text" class="form-input" id="book-contact" placeholder="Email or phone number"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="book-description">Description</label>
+                    <textarea class="form-textarea" id="book-description"
+                        placeholder="Additional details about the book..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submit-btn">Add Book</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Modal
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Login</h2>
+                <button class="modal-close" id="login-modal-close">×</button>
+            </div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" class="form-input" id="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" class="form-input" id="email" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="login-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+        </div>
+    </div> -->
+    !-- Update your login modal form -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login</h2>
+                <span id="login-modal-close" class="modal-close">&times;</span>
+            </div>
+            <form id="login-form" class="modal-body">
+                <div class="form-group">
+                    <label for="login-email" class="form-label">Email</label>
+                    <input type="email" id="login-email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password" class="form-label">Password</label>
+                    <input type="password" id="login-password" class="form-input" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="login-cancel-btn" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add this new signup modal -->
+    <div id="signup-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Sign Up</h2>
+                <span id="signup-modal-close" class="modal-close">&times;</span>
+            </div>
+            <form id="signup-form" class="modal-body">
+                <div class="form-group">
+                    <label for="signup-username" class="form-label">Username</label>
+                    <input type="text" id="signup-username" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email" class="form-label">Email</label>
+                    <input type="email" id="signup-email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password" class="form-label">Password</label>
+                    <input type="password" id="signup-password" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-confirm-password" class="form-label">Confirm Password</label>
+                    <input type="password" id="signup-confirm-password" class="form-input" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="signup-cancel-btn" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Update your existing login form fields (remove username, change email id) -->
+    <!-- Old login form had username and email, new one only needs email and password -->
+
+    <!-- Add toast styles to your CSS -->
+    <style>
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideInRight 0.3s ease;
+            max-width: 300px;
+        }
+
+        .toast.success {
+            background: var(--success-color);
+        }
+
+        .toast.error {
+            background: var(--danger-color);
+        }
+
+        .toast.warning {
+            background: var(--warning-color);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .modal-close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+    </style>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contact-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Contact Book Owner</h2>
+                <button class="modal-close" id="contact-modal-close">×</button>
+            </div>
+
+            <div id="contact-info">
+                <p><strong>Contact Information:</strong></p>
+                <p id="contact-details"></p>
+                <p class="mt-2">You can reach out to the book owner using the contact information above.</p>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
