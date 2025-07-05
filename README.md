@@ -2,8 +2,9 @@
 **ExchangeReads** is a community-driven web application that allows users to share, discover, and exchange books with others. The platform provides a seamless experience for listing books, searching and filtering available titles, and connecting with fellow book lovers. With user authentication, book management, and direct contact features, ExchangeReads fosters a vibrant book-sharing community.
 <br> 
 
-* ## Features
-- User Authentication
+## Features
+
+### User Authentication
 - Secure sign up, log in, and log out
 - Session-based authentication with auto-login after signup
 
@@ -41,6 +42,7 @@
 
 
 ## Main Functions
+
 ### Authentication
 
 - User login, signup, logout, and session checking
